@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Buena Vibra Barbería</title>
+<meta name="description" content="Sucursales de Buena Vibra Barbería en Córdoba: WhatsApp, cómo llegar y reseñas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script>
+/* =========================================================
+   DATOS DE LA PÁGINA — lo único que se edita en el día a día
+   ---------------------------------------------------------
+   Reglas:
+   - Para agregar una sucursal: copiar una ficha { ... } completa.
+   - Para ocultar un botón: dejar el dato vacío  ""
+   - "PENDIENTE" muestra el botón en gris (dato que falta cargar).
+   - whatsapp: formato 549 + característica sin 0 + número sin 15.
+     Ejemplo: 5493511234567
+   - domingo: horario de domingo de esa sucursal (ej. "10 a 14 h"),
+              "cerrado" = muestra "Cerrado los domingos",
+              "" = no muestra nada.
+   - mapa y resena usan el Place ID de Google de cada sucursal.
+   ========================================================= */
+const CONFIG = {
+  horario: "Lunes a sábado de 10 a 21 h",
+  aviso: "Atendemos por orden de llegada",
+  mensajeWhatsApp: "Hola! Quería hacer una consulta"
+};
+
+const SUCURSALES = [
+  {
+    nombre: "Bº Ayacucho",
+    direccion: "Maracaibo 655",
+    whatsapp: "PENDIENTE",
+    mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJt5vUID-YMpQRBFnOMC6mj10",
+    resena: "https://search.google.com/local/writereview?placeid=ChIJt5vUID-YMpQRBFnOMC6mj10",
+    domingo: "10 a 14 h"
+  },
+  {
+    nombre: "Bº Los Plátanos",
+    direccion: "Maestro Vidal 1365",
+    whatsapp: "PENDIENTE",
+    mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJoVUB2tWjMpQR9gugNH3eP2o",
+    resena: "https://search.google.com/local/writereview?placeid=ChIJoVUB2tWjMpQR9gugNH3eP2o",
+    domingo: "10 a 14 h"
+  },
+  {
+    nombre: "Bº Villa Corina",
+    direccion: "Av. Rancagua 3202",
+    whatsapp: "PENDIENTE",
+    mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJvbY5dwCXMpQRbSlkLYYA6Qo",
+    resena: "https://search.google.com/local/writereview?placeid=ChIJvbY5dwCXMpQRbSlkLYYA6Qo",
+    domingo: "10 a 14 h"
+  },
+  {
+    nombre: "Dino Super Mami 3",
+    direccion: "Colectora, frente a Villa Libertador",
+    whatsapp: "PENDIENTE",
+    mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJEf3uIwCjMpQRRkXSyqMaasg",
+    resena: "https://search.google.com/local/writereview?placeid=ChIJEf3uIwCjMpQRRkXSyqMaasg",
+    domingo: "10 a 21 h"
+  },
+  {
+    nombre: "Nueva Córdoba",
+    direccion: "Achával Rodríguez 169",
+    whatsapp: "PENDIENTE",
+    mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJIViNEACjMpQRaEe8u7binp4",
+    resena: "https://search.google.com/local/writereview?placeid=ChIJIViNEACjMpQRaEe8u7binp4",
+    domingo: "cerrado"
+  },
+  {
+    nombre: "Bº Villa Adela",
+    direccion: "Aviador Pettirossi 2784",
+    whatsapp: "PENDIENTE",
+    mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJ-4DFMwChMpQRZIKKhPZKMpo",
+    resena: "https://search.google.com/local/writereview?placeid=ChIJ-4DFMwChMpQRZIKKhPZKMpo",
+    domingo: "10 a 14 h"
+  }
+];
+/* ================= FIN DE LOS DATOS ================= */
+</script>
+
+<style>
+  :root {
+    --bg: #111111;
+    --card: #1c1c1c;
+    --card-border: #2c2c2c;
+    --text: #f2f2f2;
+    --muted: #a3a3a3;
+    --gold: #fe9900;
+    --btn: #262626;
+    --btn-hover: #333333;
+    --off: #5a5a5a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  main { width: 100%; max-width: 440px; padding: 32px 16px 40px; }
+
+  header { text-align: center; margin-bottom: 28px; }
+  .logo { width: 100%; max-width: 300px; height: auto; display: block; margin: 0 auto; }
+  .info { margin-top: 18px; font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .info strong { color: var(--gold); font-weight: 600; }
+
+  .sucursal {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .sucursal h2 { font-size: 17px; font-weight: 700; }
+  .dir { font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .domingo {
+    display: inline-block; margin-top: 8px; font-size: 12px;
+    color: var(--gold); border: 1px solid var(--gold);
+    border-radius: 999px; padding: 2px 10px;
+  }
+  .botones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
+  .botones a {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    background: var(--btn); color: var(--text); text-decoration: none;
+    border-radius: 12px; padding: 12px 4px; font-size: 12px; font-weight: 600;
+    transition: background .15s;
+  }
+  .botones a:hover { background: var(--btn-hover); }
+  .botones svg { width: 24px; height: 24px; color: var(--gold); }
+  .botones a.pendiente { color: var(--off); pointer-events: none; }
+  .botones a.pendiente svg { color: var(--off); }
+
+  footer { text-align: center; font-size: 11px; color: var(--off); margin-top: 24px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img class="logo" src="logo.png" alt="Buena Vibra Barbería">
+    <p class="info"><strong id="aviso"></strong><br><span id="horario"></span></p>
+  </header>
+
+  <section id="lista"></section>
+
+  <footer>Buena Vibra Barbería · Córdoba</footer>
+</main>
+
+<script>
+const ICONOS = {
+  whatsapp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></svg>',
+  mapa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+  resena: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9L12 3z"/></svg>'
+};
+
+function boton(tipo, valor, texto) {
+  if (!valor) return "";                       // vacío = no se muestra
+  if (valor === "PENDIENTE") {
+    return `<a class="pendiente" aria-disabled="true">${ICONOS[tipo]}${texto}</a>`;
+  }
+  let url = valor;
+  if (tipo === "whatsapp") {
+    url = `https://wa.me/${valor}?text=${encodeURIComponent(CONFIG.mensajeWhatsApp)}`;
+  }
+  return `<a href="${url}" target="_blank" rel="noopener">${ICONOS[tipo]}${texto}</a>`;
+}
+
+document.getElementById("aviso").textContent = CONFIG.aviso;
+document.getElementById("horario").textContent = CONFIG.horario;
+
+document.getElementById("lista").innerHTML = SUCURSALES.map(s => `
+  <article class="sucursal">
+    <h2>${s.nombre}</h2>
+    ${s.direccion ? `<p class="dir">${s.direccion}</p>` : ""}
+    ${s.domingo ? `<span class="domingo">${s.domingo === "cerrado" ? "Cerrado los domingos" : "Domingos de " + s.domingo}</span>` : ""}
+    <div class="botones">
+      ${boton("whatsapp", s.whatsapp, "WhatsApp")}
+      ${boton("mapa", s.mapa, "Cómo llegar")}
+      ${boton("resena", s.resena, "Dejar reseña")}
+    </div>
+  </article>
+`).join("");
+</script>
+</body>
+</html>
