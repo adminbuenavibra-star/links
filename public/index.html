@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Buena Vibra Barbería</title>
 <meta name="description" content="Sucursales de Buena Vibra Barbería en Córdoba: WhatsApp, cómo llegar y reseñas.">
+<!-- Métricas (Umami): visitas y toques en botones. Anónimo, sin cookies. -->
+<script defer src="https://cloud.umami.is/script.js" data-website-id="202ec890-39ec-4176-8674-affa3f707c57"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -159,7 +161,7 @@ const ICONOS = {
   resena: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9L12 3z"/></svg>'
 };
 
-function boton(tipo, valor, texto) {
+function boton(tipo, valor, texto, sucursal) {
   if (!valor) return "";                       // vacío = no se muestra
   if (valor === "PENDIENTE") {
     return `<a class="pendiente" aria-disabled="true">${ICONOS[tipo]}${texto}</a>`;
@@ -168,7 +170,7 @@ function boton(tipo, valor, texto) {
   if (tipo === "whatsapp") {
     url = `https://wa.me/${valor}?text=${encodeURIComponent(CONFIG.mensajeWhatsApp)}`;
   }
-  return `<a href="${url}" target="_blank" rel="noopener">${ICONOS[tipo]}${texto}</a>`;
+  return `<a href="${url}" target="_blank" rel="noopener" data-umami-event="${texto}" data-umami-event-sucursal="${sucursal}">${ICONOS[tipo]}${texto}</a>`;
 }
 
 document.getElementById("aviso").textContent = CONFIG.aviso;
@@ -180,9 +182,9 @@ document.getElementById("lista").innerHTML = SUCURSALES.map(s => `
     ${s.direccion ? `<p class="dir">${s.direccion}</p>` : ""}
     ${s.domingo ? `<span class="domingo">${s.domingo === "cerrado" ? "Cerrado los domingos" : "Domingos de " + s.domingo}</span>` : ""}
     <div class="botones">
-      ${boton("whatsapp", s.whatsapp, "WhatsApp")}
-      ${boton("mapa", s.mapa, "Cómo llegar")}
-      ${boton("resena", s.resena, "Dejar reseña")}
+      ${boton("whatsapp", s.whatsapp, "WhatsApp", s.nombre)}
+      ${boton("mapa", s.mapa, "Cómo llegar", s.nombre)}
+      ${boton("resena", s.resena, "Dejar reseña", s.nombre)}
     </div>
   </article>
 `).join("");

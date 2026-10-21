@@ -12,6 +12,7 @@ Página única para la bio de Instagram. El sitio está en la carpeta public/ (i
   mapa:   https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=PLACE_ID
   reseña: https://search.google.com/local/writereview?placeid=PLACE_ID
 - Horarios: CONFIG.horario (lunes a sábado, igual para todas). Cada sucursal tiene su campo domingo: "10 a 14 h", "cerrado" o "".
+- Métricas: Umami (cloud.umami.is, cuenta de Buena Vibra). El script está en el <head>; cada botón activo manda un evento con su texto y la sucursal. No quitarlo al editar.
 - WhatsApp: 549 + característica sin 0 + número sin 15 (ej. 5493511234567).
 - Antes de publicar: mostrar el cambio y esperar confirmación.
 - Un cambio por pedido, con un mensaje de guardado claro (ej. "Agrega sucursal Los Plátanos").
