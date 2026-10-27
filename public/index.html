@@ -177,18 +177,10 @@ const SUCURSALES = [
     .logo { max-width: 300px; }
   }
   @media (min-width: 1100px) {
-    main { zoom: 1.25; max-width: 1060px; }
+    main { zoom: 1.25; max-width: 1060px; padding-top: 40px; padding-bottom: 24px; }
     #lista { grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    main { padding-top: 56px; }
     .logo { max-width: 420px; }
-    header { margin-bottom: 36px; }
-  }
-  /* Monitores grandes: se agranda más para ocupar la pantalla */
-  @media (min-width: 1600px) and (min-height: 950px) {
-    main { zoom: 1.45; }
-  }
-  @media (min-width: 2200px) and (min-height: 1250px) {
-    main { zoom: 1.9; }
+    header { margin-bottom: 32px; }
   }
 </style>
 </head>
@@ -242,6 +234,21 @@ const ICONO_EXTRA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 document.getElementById("extras").innerHTML = (CONFIG.botonesExtra || []).map(b =>
   `<a href="${b.url}" target="_blank" rel="noopener" data-umami-event="${b.texto}">${ICONO_EXTRA}${b.texto}</a>`
 ).join("");
+
+/* Compu: agranda todo en proporción hasta llenar la pantalla, sin pasarse del alto
+   (así entra completo, sin scroll). En celular y tablet no hace nada. */
+function ajustarPantalla() {
+  const m = document.querySelector("main");
+  if (window.innerWidth < 1100) { m.style.zoom = ""; return; }
+  m.style.zoom = 1;
+  const r = m.getBoundingClientRect();
+  const porAncho = (window.innerWidth * 0.94) / r.width;
+  const porAlto = window.innerHeight / r.height;
+  m.style.zoom = Math.max(0.8, Math.min(porAncho, porAlto, 1.9)).toFixed(3);
+}
+window.addEventListener("resize", ajustarPantalla);
+window.addEventListener("load", ajustarPantalla);
+ajustarPantalla();
 </script>
 </body>
 </html>
