@@ -21,13 +21,15 @@
    - "PENDIENTE" muestra el botón en gris (dato que falta cargar).
    - whatsapp: formato 549 + característica sin 0 + número sin 15.
      Ejemplo: 5493511234567
-   - domingo: horario de domingo de esa sucursal (ej. "10 a 14 h"),
-              "cerrado" = muestra "Cerrado los domingos",
-              "" = no muestra nada.
+   - nombre: se muestra en MAYÚSCULAS; la dirección va al lado, en el mismo renglón.
+   - domingo: horario de domingo de esa sucursal (ej. "de 10 a 14hs"),
+              "cerrado" = muestra "Dom Cerrado" con "Cerrado" en gris,
+              "" = muestra solo el horario de lunes a sábado.
    - mapa y resena usan el Place ID de Google de cada sucursal.
    ========================================================= */
 const CONFIG = {
   horario: "Lunes a sábado de 10 a 21 h",
+  horarioSemana: "Lun a Sáb de 10 a 21hs",
   aviso: "Atendemos por orden de llegada",
   mensajeWhatsApp: "Hola! Quería hacer una consulta"
 };
@@ -39,7 +41,7 @@ const SUCURSALES = [
     whatsapp: "PENDIENTE",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJt5vUID-YMpQRBFnOMC6mj10",
     resena: "https://search.google.com/local/writereview?placeid=ChIJt5vUID-YMpQRBFnOMC6mj10",
-    domingo: "10 a 14 h"
+    domingo: "de 10 a 14hs"
   },
   {
     nombre: "Bº Los Plátanos",
@@ -47,7 +49,7 @@ const SUCURSALES = [
     whatsapp: "PENDIENTE",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJoVUB2tWjMpQR9gugNH3eP2o",
     resena: "https://search.google.com/local/writereview?placeid=ChIJoVUB2tWjMpQR9gugNH3eP2o",
-    domingo: "10 a 14 h"
+    domingo: "de 10 a 14hs"
   },
   {
     nombre: "Bº Villa Corina",
@@ -55,7 +57,7 @@ const SUCURSALES = [
     whatsapp: "PENDIENTE",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJvbY5dwCXMpQRbSlkLYYA6Qo",
     resena: "https://search.google.com/local/writereview?placeid=ChIJvbY5dwCXMpQRbSlkLYYA6Qo",
-    domingo: "10 a 14 h"
+    domingo: "cerrado"
   },
   {
     nombre: "Dino Super Mami 3",
@@ -63,7 +65,7 @@ const SUCURSALES = [
     whatsapp: "PENDIENTE",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJEf3uIwCjMpQRRkXSyqMaasg",
     resena: "https://search.google.com/local/writereview?placeid=ChIJEf3uIwCjMpQRRkXSyqMaasg",
-    domingo: "10 a 21 h"
+    domingo: "de 10 a 21hs"
   },
   {
     nombre: "Nueva Córdoba",
@@ -79,7 +81,7 @@ const SUCURSALES = [
     whatsapp: "5493516570662",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJ-4DFMwChMpQRZIKKhPZKMpo",
     resena: "https://search.google.com/local/writereview?placeid=ChIJ-4DFMwChMpQRZIKKhPZKMpo",
-    domingo: "10 a 14 h"
+    domingo: "cerrado"
   }
 ];
 /* ================= FIN DE LOS DATOS ================= */
@@ -120,13 +122,11 @@ const SUCURSALES = [
     padding: 12px 14px;
     margin-bottom: 10px;
   }
-  .sucursal h2 { font-size: 18px; font-weight: 700; }
-  .dir { font-size: 13px; color: var(--muted); margin-top: 1px; }
-  .domingo {
-    display: inline-block; margin-top: 6px; font-size: 11px;
-    color: var(--gold); border: 1px solid var(--gold);
-    border-radius: 999px; padding: 2px 10px;
-  }
+  .sucursal h2 { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; line-height: 1.3; }
+  .dir { font-size: 13px; font-weight: 400; color: var(--muted); text-transform: none; letter-spacing: 0; margin-left: 6px; }
+  .horario { font-size: 12px; color: #d4d4d4; margin-top: 4px; }
+  .horario .sep { color: var(--off); margin: 0 6px; }
+  .cerrado { color: #6b6b6b; }
   .botones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
   .botones a {
     display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 5px;
@@ -178,9 +178,8 @@ document.getElementById("horario").textContent = CONFIG.horario;
 
 document.getElementById("lista").innerHTML = SUCURSALES.map(s => `
   <article class="sucursal">
-    <h2>${s.nombre}</h2>
-    ${s.direccion ? `<p class="dir">${s.direccion}</p>` : ""}
-    ${s.domingo ? `<span class="domingo">${s.domingo === "cerrado" ? "Cerrado los domingos" : "Domingos de " + s.domingo}</span>` : ""}
+    <h2>${s.nombre}${s.direccion ? `<span class="dir">${s.direccion}</span>` : ""}</h2>
+    <p class="horario">${CONFIG.horarioSemana}${s.domingo ? `<span class="sep">·</span>Dom ${s.domingo === "cerrado" ? `<span class="cerrado">Cerrado</span>` : s.domingo}` : ""}</p>
     <div class="botones">
       ${boton("whatsapp", s.whatsapp, "WhatsApp", s.nombre)}
       ${boton("mapa", s.mapa, "Cómo llegar", s.nombre)}
