@@ -20,6 +20,8 @@
    - Para ocultar un botón: dejar el dato vacío  ""
    - "PENDIENTE" muestra el botón en gris (dato que falta cargar).
    - whatsapp: formato 549 + característica sin 0 + número sin 15.
+     Hoy todas usan el mismo número; el mensaje cambia según la sucursal.
+   - mensajeWhatsApp: {sucursal} se reemplaza por el nombre de la sucursal.
      Ejemplo: 5493511234567
    - nombre: se muestra en MAYÚSCULAS; la dirección va al lado, en el mismo renglón.
    - domingo: horario de domingo de esa sucursal (ej. "de 10 a 14hs"),
@@ -30,14 +32,14 @@
 const CONFIG = {
   horarioSemana: "Lun a Sáb de 10 a 21hs",
   aviso: "Atendemos por orden de llegada",
-  mensajeWhatsApp: "Hola! Quería hacer una consulta"
+  mensajeWhatsApp: "Hola! Quería hacer una consulta sobre la sucursal {sucursal}"
 };
 
 const SUCURSALES = [
   {
     nombre: "Bº Ayacucho",
     direccion: "Maracaibo 655",
-    whatsapp: "PENDIENTE",
+    whatsapp: "5493516570662",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJt5vUID-YMpQRBFnOMC6mj10",
     resena: "https://search.google.com/local/writereview?placeid=ChIJt5vUID-YMpQRBFnOMC6mj10",
     domingo: "de 10 a 14hs"
@@ -45,7 +47,7 @@ const SUCURSALES = [
   {
     nombre: "Bº Los Plátanos",
     direccion: "Maestro Vidal 1365",
-    whatsapp: "PENDIENTE",
+    whatsapp: "5493516570662",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJoVUB2tWjMpQR9gugNH3eP2o",
     resena: "https://search.google.com/local/writereview?placeid=ChIJoVUB2tWjMpQR9gugNH3eP2o",
     domingo: "de 10 a 14hs"
@@ -53,7 +55,7 @@ const SUCURSALES = [
   {
     nombre: "Bº Villa Corina",
     direccion: "Av. Rancagua 3202",
-    whatsapp: "PENDIENTE",
+    whatsapp: "5493516570662",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJvbY5dwCXMpQRbSlkLYYA6Qo",
     resena: "https://search.google.com/local/writereview?placeid=ChIJvbY5dwCXMpQRbSlkLYYA6Qo",
     domingo: "cerrado"
@@ -61,7 +63,7 @@ const SUCURSALES = [
   {
     nombre: "Dino Super Mami 3",
     direccion: "Colectora, frente a Villa Libertador",
-    whatsapp: "PENDIENTE",
+    whatsapp: "5493516570662",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJEf3uIwCjMpQRRkXSyqMaasg",
     resena: "https://search.google.com/local/writereview?placeid=ChIJEf3uIwCjMpQRRkXSyqMaasg",
     domingo: "de 10 a 21hs"
@@ -69,7 +71,7 @@ const SUCURSALES = [
   {
     nombre: "Nueva Córdoba",
     direccion: "Achával Rodríguez 169",
-    whatsapp: "PENDIENTE",
+    whatsapp: "5493516570662",
     mapa: "https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=ChIJIViNEACjMpQRaEe8u7binp4",
     resena: "https://search.google.com/local/writereview?placeid=ChIJIViNEACjMpQRaEe8u7binp4",
     domingo: "cerrado"
@@ -166,7 +168,7 @@ function boton(tipo, valor, texto, sucursal) {
   }
   let url = valor;
   if (tipo === "whatsapp") {
-    url = `https://wa.me/${valor}?text=${encodeURIComponent(CONFIG.mensajeWhatsApp)}`;
+    url = `https://wa.me/${valor}?text=${encodeURIComponent(CONFIG.mensajeWhatsApp.replace("{sucursal}", sucursal))}`;
   }
   return `<a href="${url}" target="_blank" rel="noopener" data-umami-event="${texto}" data-umami-event-sucursal="${sucursal}">${ICONOS[tipo]}${texto}</a>`;
 }
