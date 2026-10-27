@@ -164,20 +164,22 @@ const SUCURSALES = [
 
   footer { text-align: center; font-size: 11px; color: var(--off); margin-top: 24px; }
 
-  /* Pantallas grandes: la misma página se acomoda en columnas.
-     En el celular no cambia nada. */
+  /* Pantallas grandes: la misma página en columnas y todo agrandado en proporción
+     (zoom), así letras, tarjetas y espacios crecen juntos. En el celular no cambia nada. */
   @media (min-width: 720px) {
-    main { max-width: 760px; padding-top: 48px; }
+    main { zoom: 1.12; max-width: 700px; padding-top: 40px; }
+    .botones a { white-space: nowrap; }
     #lista { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
     #lista .sucursal { margin-bottom: 0; display: flex; flex-direction: column; }
     #lista .botones { margin-top: auto; padding-top: 22px; }
-    .extras { max-width: 420px; margin: 28px auto 0; }
+    .extras { max-width: 360px; margin: 28px auto 0; }
+    .logo { max-width: 300px; }
   }
   @media (min-width: 1100px) {
-    main { max-width: 1120px; }
+    main { zoom: 1.25; max-width: 1060px; }
     #lista { grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .logo { max-width: 340px; }
-    header { margin-bottom: 40px; }
+    header { margin-bottom: 36px; }
   }
 </style>
 </head>
