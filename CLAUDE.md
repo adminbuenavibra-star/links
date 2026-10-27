@@ -11,7 +11,7 @@ Página única para la bio de Instagram. El sitio está en la carpeta public/ (i
 - Links de Google por sucursal (con su Place ID):
   mapa:   https://www.google.com/maps/search/?api=1&query=Buena%20Vibra%20Barberia&query_place_id=PLACE_ID
   reseña: https://search.google.com/local/writereview?placeid=PLACE_ID
-- Horarios: CONFIG.horarioSemana (Lun a Sáb, igual para todas, se muestra en cada tarjeta). Cada sucursal tiene su campo domingo: "de 10 a 14hs", "cerrado" (se ve "Dom Cerrado" en gris) o "". El nombre se muestra en mayúsculas por estilo; en los datos se escribe normal.
+- Horarios: CONFIG.horarioSemanaDias + horarioSemanaHoras (Lun a Sáb, igual para todas, se muestra en cada tarjeta). Cada sucursal tiene su campo domingo: "de 10 a 14hs", "cerrado" (se ve "Dom Cerrado" en gris) o "". El nombre se muestra en mayúsculas por estilo; en los datos se escribe normal.
 - Botones generales (debajo de las sucursales): CONFIG.botonesExtra, uno por línea { texto, url }.
 - Métricas: Umami (cloud.umami.is, cuenta de Buena Vibra). El script está en el <head>; cada botón activo manda un evento con su texto y la sucursal. No quitarlo al editar.
 - WhatsApp: 549 + característica sin 0 + número sin 15 (ej. 5493511234567). Todas las sucursales usan el mismo número; CONFIG.mensajeWhatsApp lleva {sucursal}, que se reemplaza por el nombre de la sucursal del botón.

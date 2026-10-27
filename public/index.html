@@ -30,7 +30,8 @@
    - mapa y resena usan el Place ID de Google de cada sucursal.
    ========================================================= */
 const CONFIG = {
-  horarioSemana: "Lun a Sáb de 10 a 21hs",
+  horarioSemanaDias: "Lun a Sáb",
+  horarioSemanaHoras: "de 10 a 21hs",
   aviso: "Atendemos por orden de llegada",
   mensajeWhatsApp: "Hola! Quería hacer una consulta sobre la sucursal {sucursal}",
   // Botones generales debajo de las sucursales. Para sacar uno, borrar su línea.
@@ -129,8 +130,16 @@ const SUCURSALES = [
   }
   .sucursal h2 { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; line-height: 1.3; }
   .dir { font-size: 13px; font-weight: 400; color: var(--muted); text-transform: none; letter-spacing: 0; margin-left: 6px; }
-  .horario { font-size: 12px; color: #d4d4d4; margin-top: 10px; display: flex; justify-content: space-between; gap: 8px; }
-  .cerrado { color: #6b6b6b; }
+  /* Horarios: Lun a Sáb en texto; el domingo resaltado como etiqueta a la derecha */
+  .horario { font-size: 12px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .semana { color: #e6e6e6; }
+  .semana .dias { color: var(--muted); }
+  .dom {
+    font-size: 11.5px; white-space: nowrap; padding: 3px 10px; border-radius: 999px;
+    color: var(--gold); background: rgba(254,153,0,.12); border: 1px solid rgba(254,153,0,.4);
+  }
+  .dom b { font-weight: 700; }
+  .dom.cerrado { color: #8a8a8a; background: #232323; border-color: #333333; }
   .botones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 22px; }
   .botones a {
     display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 5px;
@@ -193,7 +202,7 @@ document.getElementById("aviso").textContent = CONFIG.aviso;
 document.getElementById("lista").innerHTML = SUCURSALES.map(s => `
   <article class="sucursal">
     <h2>${s.nombre}${s.direccion ? `<span class="dir">${s.direccion}</span>` : ""}</h2>
-    <p class="horario"><span>${CONFIG.horarioSemana}</span>${s.domingo ? `<span>Dom ${s.domingo === "cerrado" ? `<span class="cerrado">Cerrado</span>` : s.domingo}</span>` : ""}</p>
+    <p class="horario"><span class="semana"><span class="dias">${CONFIG.horarioSemanaDias}</span> ${CONFIG.horarioSemanaHoras}</span>${s.domingo ? (s.domingo === "cerrado" ? `<span class="dom cerrado"><b>Dom</b> Cerrado</span>` : `<span class="dom"><b>Dom</b> ${s.domingo}</span>`) : ""}</p>
     <div class="botones">
       ${boton("whatsapp", s.whatsapp, "WhatsApp", s.nombre)}
       ${boton("mapa", s.mapa, "Cómo llegar", s.nombre)}
