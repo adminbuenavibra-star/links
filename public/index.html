@@ -167,7 +167,8 @@ const SUCURSALES = [
   /* Pantallas grandes: la misma página en columnas y todo agrandado en proporción
      (zoom), así letras, tarjetas y espacios crecen juntos. En el celular no cambia nada. */
   @media (min-width: 720px) {
-    main { zoom: 1.12; max-width: 700px; padding-top: 40px; }
+    body { align-items: center; }   /* contenido centrado en alto: sin negro de sobra abajo */
+    main { zoom: 1.12; max-width: 700px; padding: 32px 16px; }
     .botones a { white-space: nowrap; }
     #lista { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
     #lista .sucursal { margin-bottom: 0; display: flex; flex-direction: column; }
@@ -180,6 +181,13 @@ const SUCURSALES = [
     #lista { grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .logo { max-width: 340px; }
     header { margin-bottom: 36px; }
+  }
+  /* Monitores grandes: se agranda más para ocupar la pantalla */
+  @media (min-width: 1600px) and (min-height: 950px) {
+    main { zoom: 1.45; }
+  }
+  @media (min-width: 2200px) and (min-height: 1250px) {
+    main { zoom: 1.9; }
   }
 </style>
 </head>
