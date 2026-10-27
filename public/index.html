@@ -28,7 +28,6 @@
    - mapa y resena usan el Place ID de Google de cada sucursal.
    ========================================================= */
 const CONFIG = {
-  horario: "Lunes a sábado de 10 a 21 h",
   horarioSemana: "Lun a Sáb de 10 a 21hs",
   aviso: "Atendemos por orden de llegada",
   mensajeWhatsApp: "Hola! Quería hacer una consulta"
@@ -124,8 +123,7 @@ const SUCURSALES = [
   }
   .sucursal h2 { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; line-height: 1.3; }
   .dir { font-size: 13px; font-weight: 400; color: var(--muted); text-transform: none; letter-spacing: 0; margin-left: 6px; }
-  .horario { font-size: 12px; color: #d4d4d4; margin-top: 4px; }
-  .horario .sep { color: var(--off); margin: 0 6px; }
+  .horario { font-size: 12px; color: #d4d4d4; margin-top: 4px; display: flex; justify-content: space-between; gap: 8px; }
   .cerrado { color: #6b6b6b; }
   .botones { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px; }
   .botones a {
@@ -146,7 +144,7 @@ const SUCURSALES = [
 <main>
   <header>
     <img class="logo" src="logo.png" alt="Buena Vibra Barbería">
-    <p class="info"><strong id="aviso"></strong><br><span id="horario"></span></p>
+    <p class="info"><strong id="aviso"></strong></p>
   </header>
 
   <section id="lista"></section>
@@ -174,12 +172,11 @@ function boton(tipo, valor, texto, sucursal) {
 }
 
 document.getElementById("aviso").textContent = CONFIG.aviso;
-document.getElementById("horario").textContent = CONFIG.horario;
 
 document.getElementById("lista").innerHTML = SUCURSALES.map(s => `
   <article class="sucursal">
     <h2>${s.nombre}${s.direccion ? `<span class="dir">${s.direccion}</span>` : ""}</h2>
-    <p class="horario">${CONFIG.horarioSemana}${s.domingo ? `<span class="sep">·</span>Dom ${s.domingo === "cerrado" ? `<span class="cerrado">Cerrado</span>` : s.domingo}` : ""}</p>
+    <p class="horario"><span>${CONFIG.horarioSemana}</span>${s.domingo ? `<span>Dom ${s.domingo === "cerrado" ? `<span class="cerrado">Cerrado</span>` : s.domingo}</span>` : ""}</p>
     <div class="botones">
       ${boton("whatsapp", s.whatsapp, "WhatsApp", s.nombre)}
       ${boton("mapa", s.mapa, "Cómo llegar", s.nombre)}
